@@ -10,15 +10,6 @@
         "tiktok": "ttv_rats0oup"
       },
       {
-        "name": "Scaith",
-        "image": "images/scaith.png",
-        "twitch": "starlitabyss",
-        "discord": "muVa3yD4ba",
-        "twitter": "StarlitAbyss_",
-        "bluesky": "starlitabyss.com",
-        "youtube": "StarlitAbyssVODs"
-      },
-      {
         "name": "Slug",
         "image": "images/slug.png",
         "twitch": "slvgbucket ",
@@ -45,6 +36,15 @@
         "bluesky": "harlequiinjestr.bsky.social",
         "youtube": "HarlequiinJestr",
         "tiktok": "HarlequiinJestr"
+      },
+      {
+        "name": "Scaith",
+        "image": "images/scaith.png",
+        "twitch": "starlitabyss",
+        "discord": "muVa3yD4ba",
+        "twitter": "StarlitAbyss_",
+        "bluesky": "starlitabyss.com",
+        "youtube": "StarlitAbyssVODs"
       }
     ]
   }
