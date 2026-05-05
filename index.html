@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dead Air Collective</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="crt-screen">
+    <div class="vhs">
+      <video
+             src="https://res.cloudinary.com/dhcl0fsay/video/upload/v1758365149/deadmeat-horror-awards-24/vhs_svgkmp.mp4"
+             loop
+             autoplay
+             playsinline
+             muted
+             style="
+                    cursor: auto;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 0px;
+                    display: block;
+                    object-fit: cover;
+                    background-color: rgba(0, 0, 0, 0);
+                    object-position: 50% 50%;
+                    "
+             />
+    </div>
+    <div class="backgroundImage"></div>
+    <div class="noise-overlay"></div>
+    <div class="grain-overlay"></div>
+
+      <!-- Collective Socials, hardcoded for good luck -->
+      <section id="collective-socials">
+        <div class="socials">
+          <a href="https://discord.gg/du4GmpENyF" target="_blank" aria-label="Discord"><i class="fab fa-discord"></i></a>
+          <a href="https://x.com/DeadAirCo" target="_blank" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="https://bsky.app/profile/deadaircollective.bsky.social" target="_blank" aria-label="Bluesky"><i class="fab fa-bluesky"></i></a>
+          <a href="https://www.youtube.com/@DeadAirCollectiveTV" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          <a href="mailto:contact@deadaircollective.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
+        </div>
+      </section>
+    <div class="container glow">
+      <!-- About Us -->
+      <section id="about">
+        <h1 class="glitch-text" data-text="Dead Air Collective">Dead Air Collective</h1>
+        <p>...because dropped frames, disconnects, buffering and packet loss are features
+        </p>
+      </section>
+
+      <section id="members">
+        <!-- Loaded dynamically -->
+      </section>
+
+
+    <div class="buttonmarquee">
+      <marquee>
+          <img src="images/buttons/forfirefox.png" alt="">
+          <img src="images/buttons/mspaint.jpg" alt="">
+          <img src="images/buttons/internetprivacynow.gif" alt="">
+          <img src="images/buttons/ao3.gif" alt="">
+      </marquee>
+    </div>
+
+    </div>
+  </div>
+
+<script>
+  fetch('data.json')
+    .then(response => response.json())
+    .then(data => {
+      const membersSection = document.getElementById('members');
+      membersSection.innerHTML = '';
+
+      data.members.forEach(member => {
+        const memberDiv = document.createElement('div');
+        memberDiv.className = 'member glow';
+
+        // member image background
+        if (member.image) {
+          memberDiv.style.backgroundImage = `url('${member.image}')`;
+          memberDiv.style.backgroundSize = 'cover';
+          memberDiv.style.backgroundPosition = 'center';
+          memberDiv.style.backgroundRepeat = 'no-repeat';
+        }
+
+        // Name
+        const name = document.createElement('h3');
+        name.textContent = member.name;
+        memberDiv.appendChild(name);
+
+        // Social icons container
+        const socialsDiv = document.createElement('div');
+        socialsDiv.className = 'socials';
+
+        // Helper to add social link
+        const addSocial = (platform, username, iconClass) => {
+          if (username) {
+            let url = '#';
+            if (platform === 'twitch')      url = `https://twitch.tv/${username}`;
+            else if (platform === 'discord') url = `https://discord.gg/${username}`;
+            else if (platform === 'twitter') url = `https://x.com/${username}`;
+            else if (platform === 'bluesky') url = `https://bsky.app/profile/${username}`;
+            else if (platform === 'youtube') url = `https://youtube.com/@${username}`;
+            else if (platform === 'tiktok')  url = `https://www.tiktok.com/@${username}`;
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.target = '_blank';
+            link.setAttribute('aria-label', platform);
+            link.innerHTML = `<i class="${iconClass}"></i>`;
+            socialsDiv.appendChild(link);
+          }
+        };
+
+        addSocial('twitch',   member.twitch,   'fa-brands fa-twitch');
+        addSocial('discord',  member.discord,  'fa-brands fa-discord');
+        addSocial('twitter',  member.twitter,  'fa-brands fa-twitter');
+        addSocial('bluesky',  member.bluesky,  'fa-brands fa-bluesky');
+        addSocial('youtube',  member.youtube,  'fa-brands fa-youtube');
+        addSocial('tiktok',   member.tiktok,   'fa-brands fa-tiktok'); 
+
+        if (socialsDiv.children.length > 0) {
+          memberDiv.appendChild(socialsDiv);
+        }
+
+        membersSection.appendChild(memberDiv);
+      });
+    })
+    .catch(error => {
+      console.error('Error loading members:', error);
+      document.getElementById('members').innerHTML = 
+        '<p style="text-align:center;color:#ff4444;">Failed to load members. Check data.json</p>';
+    });
+    const delay = Math.random() * 3;           // 0 to 3 seconds
+    document.documentElement.style.setProperty('--random-delay', `${delay}s`);
+</script>
+</body>
+</html>

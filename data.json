@@ -1,0 +1,50 @@
+{
+    "members": [
+      {
+        "name": "Rat",
+        "image": "images/rat.png",
+        "twitch": "rats0oup",
+        "discord": "CggwPnnndj",
+        "twitter": "rats0oup",
+        "youtube": "",
+        "tiktok": "ttv_rats0oup"
+      },
+      {
+        "name": "Scaith",
+        "image": "images/scaith.png",
+        "twitch": "starlitabyss",
+        "discord": "muVa3yD4ba",
+        "twitter": "StarlitAbyss_",
+        "bluesky": "starlitabyss.com",
+        "youtube": "StarlitAbyssVODs"
+      },
+      {
+        "name": "Slug",
+        "image": "images/slug.png",
+        "twitch": "slvgbucket ",
+        "discord": "US4ZaSe3UM",
+        "twitter": "slvgbucket",
+        "bluesky": "slvgbucket.bsky.social",
+        "youtube": "slvgbucket"
+      },
+      {
+        "name": "Doomick",
+        "image": "images/doomick.png",
+        "twitch": "doomickthepancake",
+        "discord": "m2Fw77tQA7",
+        "twitter": "IAmDoomick",
+        "bluesky": "",
+        "youtube": ""
+      },
+      {
+        "name": "Harley",
+        "image": "images/harley.png",
+        "twitch": "harlequiinjestr",
+        "discord": "6bYfGxcNCJ",
+        "twitter": "HarlequiinJestr",
+        "bluesky": "harlequiinjestr.bsky.social",
+        "youtube": "HarlequiinJestr",
+        "tiktok": "HarlequiinJestr"
+      }
+    ]
+  }
