@@ -266,6 +266,99 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   text-shadow: 0 0 18px #00ff41;
 }
 
+#collective-socials {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  flex-wrap: wrap;
+  padding: 22px 0 12px;
+  z-index: 12;
+}
+
+#collective-socials .socials {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  font-size: 2.7em;
+  margin-top: 0;
+  text-shadow: 0 0 18px #00ff403b;
+}
+
+.top-button {
+  position: absolute;
+  pointer-events: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.85);
+  color: #00ff41;
+  border: 1px solid #00ff41;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  padding: 0.95rem 1.35rem;
+  border-radius: 999px;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.25);
+  transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.top-button:hover {
+  background: rgba(0, 0, 0, 1);
+  transform: translateY(-2px);
+  box-shadow: 0 0 24px rgba(0, 255, 65, 0.45);
+}
+
+.top-left {
+  top: 24px;
+  left: 24px;
+}
+
+.top-right {
+  top: 24px;
+  right: 24px;
+}
+
+@media (min-width: 1100px) {
+  #collective-socials {
+    justify-content: center;
+  }
+
+  #collective-socials .top-button {
+    position: static;
+    margin: 0;
+    align-self: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .socials {
+    font-size: 2.1em;
+    gap: 22px;
+  }
+
+  .top-button {
+    font-size: 0.9rem;
+    padding: 0.8rem 1rem;
+  }
+
+  .top-left,
+  .top-right {
+    top: 16px;
+  }
+
+  .top-left {
+    left: 16px;
+  }
+
+  .top-right {
+    right: 16px;
+  }
+}
+
 .socials a i {
   font-family: "Font Awesome 6 Brands" !important;
   font-weight: 400;
