@@ -16,7 +16,7 @@ body {
   image-rendering: pixelated;
 }
 
-/* CRT curved screen container */
+/* CRT screen container */
 .crt-screen {
   position: relative;
   max-width: 1280px;
@@ -24,11 +24,11 @@ body {
   padding: 40px 60px;
   background: #000;
   border: 10px solid #111;
-  border-radius: 38% / 22%;          /* Strong CRT curvature */
+  border-radius: 38% / 22%;
   box-shadow: 
     inset 0 0 120px #000,
     0 0 80px rgba(0,255,65,0.2);
-  transform: perspective(1000px) rotateX(4deg); /* subtle 3D curve feel */
+  transform: perspective(1000px) rotateX(4deg);
   overflow: hidden;
 }
 
@@ -244,24 +244,25 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 }
 
 .member {
-    background: rgba(8, 8, 8, 0.55);          /* semi-transparent dark overlay */
-    background-blend-mode: multiply;           /* blends bg image with color */
+    background: rgba(8, 8, 8, 0.4);          /* semi-transparent dark overlay */
+    background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    padding: 60px 30px 40px;                  /* more top padding for breathing room */
+    padding: 0px 30px 40px;
     border: 3px solid #e8ffba;
     border-radius: 14px;
     text-align: center;
     backdrop-filter: blur(4px);
-    min-height: 380px;                        /* consistent height if images vary */
+    min-height: 380px;                        /* consistent height of images */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     transition: all 0.3s ease;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: 0 0 16px rgba(0, 255, 64, 0.5), 0 0 6px rgba(0, 255, 64, 0.5), 0 0 6px rgba(0, 255, 64, 0.5);
+    margin-top: 40px;
   }
 
   .member::before {
@@ -279,11 +280,31 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   }
   
   .member h3 {
-    margin: 0.4em 0 0.8em;
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 6px 16px;
     font-size: 2.1em;
+    background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(0, 255, 65, 0.08));
+    color: #e8ffba;
+    border: 2px solid #e8ffba;
+    border-radius: 8px;
+    text-shadow: 0 0 12px rgba(0, 255, 65, 0.4), 0 0 6px rgba(0, 255, 65, 0.2);
+    box-shadow: 0 0 18px rgba(0, 255, 65, 0.3), inset 0 0 8px rgba(0, 255, 65, 0.1);
+    width: fit-content;
+    white-space: nowrap;
+    transition: all 0.3s ease;
+  }
+
+  .member:hover h3 {
+    background: linear-gradient(135deg, rgba(0, 0, 0, 1), rgba(0, 255, 65, 0.12));
+    box-shadow: 0 0 24px rgba(0, 255, 65, 0.45), inset 0 0 12px rgba(0, 255, 65, 0.15);
+    text-shadow: 0 0 16px rgba(0, 255, 65, 0.5), 0 0 8px rgba(0, 255, 65, 0.3);
   }
   
-  /* Optional: fallback if image fails to load */
+  /* fallback if image fails to load */
   .member-avatar:not([src]),
   .member-avatar[src=""] {
     background: #111;
@@ -300,8 +321,13 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   justify-content: center;
   gap: 20px;
   font-size: 1.8em;
-  margin-top: 1em;
+  margin-top: auto;
+  padding-top: 20px;
   text-shadow: 0 0 18px #00ff403b;
+}
+
+.member .socials {
+  order: 3;
 }
 
 .socials a {
@@ -466,17 +492,104 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   transform: translateY(-4px);
 }
 
-/* Subtle flicker on noise for extra VHS feel */
+/* flicker on noise */
 @keyframes noise-flicker {
   0%, 100% { opacity: 0.12; }
   50% { opacity: 0.14; }
 }
 
+  /* 404 Page */
+
+#not-found {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  gap: 30px;
+  padding: 40px 20px;
+}
+
+.error-code {
+  font-size: 8rem;
+  font-weight: bold;
+  color: #e8ffba;
+  text-shadow: 0 0 30px rgba(0, 255, 65, 0.5), 0 0 60px rgba(255, 0, 100, 0.2);
+  letter-spacing: 8px;
+  animation: pulse-error 2s ease-in-out infinite;
+}
+
+@keyframes pulse-error {
+  0%, 100% {
+    opacity: 0.8;
+    text-shadow: 0 0 30px rgba(0, 255, 65, 0.5), 0 0 60px rgba(255, 0, 100, 0.2);
+  }
+  50% {
+    opacity: 1;
+    text-shadow: 0 0 40px rgba(0, 255, 65, 0.7), 0 0 80px rgba(255, 0, 100, 0.4);
+  }
+}
+
+#not-found h1 {
+  font-size: 3.5em;
+  margin: 0;
+  color: #e8ffba;
+}
+
+.error-description {
+  font-size: 1.3em;
+  color: #00ff41;
+  max-width: 600px;
+  margin: 10px 0;
+  line-height: 1.6;
+}
+
+.return-button {
+  display: inline-block;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(0, 255, 65, 0.12));
+  color: #e8ffba;
+  border: 2px solid #e8ffba;
+  padding: 1rem 2rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  border-radius: 8px;
+  box-shadow: 0 0 28px rgba(0, 255, 65, 0.35), inset 0 0 12px rgba(0, 255, 65, 0.1);
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.35);
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.return-button:hover {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 1), rgba(0, 255, 65, 0.2));
+  box-shadow: 0 0 40px rgba(0, 255, 65, 0.5), inset 0 0 16px rgba(0, 255, 65, 0.15);
+  text-shadow: 0 0 16px rgba(0, 255, 65, 0.5);
+  transform: translateY(-2px);
+}
+
+.error-code {
+  font-size: 5rem;
+  letter-spacing: 4px;
+}
+
+#not-found h1 {
+  font-size: 2.2em;
+}
+
+.error-description {
+  font-size: 1.1em;
+}
+
+.return-button {
+  font-size: 1rem;
+  padding: 0.85rem 1.5rem;
+}
+  
+
 /* =============================================
    MOBILE SUPPORT
    ============================================= */
    @media (max-width: 1080px) {
-    /* simplify the retro frame */
     .crt-screen {
       max-width: 100%;
       margin: 0;
@@ -508,7 +621,7 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
       font-size: 1.15em;
       margin-bottom: 40px;
     }
-  
+
     h3 {
       font-size: 1.85em;
     }
@@ -551,4 +664,5 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
       font-size: 1.9em;
       padding: 12px 0;
     }
+    
   }
