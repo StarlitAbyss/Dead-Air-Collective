@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us - Dead Air Collective</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="crt-screen">
+    <div class="vhs">
+      <video
+             src="https://res.cloudinary.com/dhcl0fsay/video/upload/v1758365149/deadmeat-horror-awards-24/vhs_svgkmp.mp4"
+             loop
+             autoplay
+             playsinline
+             muted
+             style="width: 100%; height: 100%; object-fit: cover;"
+             />
+    </div>
+    <div class="backgroundImage"></div>
+    <div class="noise-overlay"></div>
+    <div class="grain-overlay"></div>
+
+    <div class="container glow">
+
+              <!-- Single Home Button -->
+      <div style="text-align: center; margin: 20px 0 40px;">
+        <a href="/" class="return-button" style="font-size: 1.3em; padding: 1rem 2.5rem;">
+          ← Return
+        </a>
+      </div>
+
+      <!-- Logo and Title Header -->
+      <div id="header-with-logo">
+        <div id="logo-section">
+          <img src="images/DACLogo_Transparent.png" alt="Dead Air Collective Logo" class="site-logo">
+        </div>
+        <section id="about">
+          <h1 class="glitch-text" data-text="Dead Air Collective">Dead Air Collective</h1>
+        </section>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="tab-nav">
+        <button class="tab-button active" data-tab="talent">Talent Agency</button>
+        <button class="tab-button" data-tab="merch">Merchandising</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div id="tab-content">
+
+        <!-- Talent Agency -->
+        <div id="talent" class="tab-panel active">
+          <div class="info-split">
+            <div class="info-image">
+              <img src="images/rat.png" alt="Talent Agency" onerror="this.src='https://via.placeholder.com/600x400/111/00ff41?text=Talent+Agency'">
+            </div>
+            <div class="info-text">
+              <h2 class="glitch-text" data-text="Our Mission is Simple">Our Mission is Simple</h2>
+              <p class="section-desc">Born from a group of friends who wanted to support each other, Dead Air Collective exists solely to support Creators. We do not own our Talent's Intellectual Property nor do we take revenue cuts.</p>
+              
+              <h3>What we Offer</h3>
+              <p>Providing Management, live2d models, assets, and marketing, as well as organizing both creator focused and cross-community projects - within our means. We hope to be able to do much more in the future.</p>
+              <p>Members also naturally are the priority of and enjoy special treatment from our merchandising branch.</p>
+
+              <h3>Our Values</h3>
+              <p>We like to be open about our inner workings. We do not support idol culture and instead focus on empowering creators to express themselves authentically.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Merchandising -->
+        <div id="merch" class="tab-panel">
+          <div class="info-split">
+            <div class="info-image">
+              <img src="images/DACLogo_Transparent.png" alt="Merchandising" onerror="this.src='https://via.placeholder.com/600x400/111/00ff41?text=Merch'">
+            </div>
+            <div class="info-text">
+              <h2 class="glitch-text" data-text="Merchandising">Merchandising</h2>
+              <p class="section-desc">Official Dead Air Collective gear, limited drops, and creator-specific collections.</p>
+              
+              <h3>Official Store</h3>
+              <p>High-quality apparel, accessories, and digital goods designed with our signature chaotic energy.</p>
+              
+              <h3>Limited Editions</h3>
+              <p>Seasonal drops and event exclusives. Once they’re gone, they’re lost in the dead air forever.</p>
+              
+              <h3>Creator Merch</h3>
+              <p>Support individual members through their personal shops linked from their profiles on the homepage.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // Tab switching
+    const tabButtons = document.querySelectorAll('.tab-button');
+    const tabPanels = document.querySelectorAll('.tab-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => btn.classList.remove('active'));
+        tabPanels.forEach(panel => panel.classList.remove('active'));
+        
+        button.classList.add('active');
+        document.getElementById(button.getAttribute('data-tab')).classList.add('active');
+      });
+    });
+
+    // Random glitch delay
+    const delay = Math.random() * 3;
+    document.documentElement.style.setProperty('--random-delay', `${delay}s`);
+  </script>
+</body>
+</html>

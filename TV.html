@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dead Air Collective Clips</title>
+  <link rel="stylesheet" href="TV_styles.css">
+</head>
+<body>
+  <h2 style="color: #00ffb4; text-align: center; margin: 0 0 10px 0; font-size: 1.5rem; letter-spacing: 2px;">tune in and have a look</h2>
+
+  <div class="tv-container">
+    <div class="tv">
+      <div class="screen-frame">
+        <div class="screen" id="screen">
+          <div class="content" id="tv-content">
+            <h1 style="font-size:2.2rem; margin:0;">Clips TV</h1>
+            <p style="font-size:1.1rem; opacity:0.9;">Dead Air Collective</p>
+          </div>
+          <video id="tv-video" style="width:100%; height:100%; display:none; object-fit: cover;"></video>
+          <div class="crt-overlay" id="crt-overlay"></div>
+          <div class="scanline-effect" id="scanline-effect"></div>
+          <div class="static-effect" id="static-effect"></div>
+          <div id="volume-overlay" class="volume-overlay">
+            <div id="volume-text">VOLUME</div>
+            <div class="volume-bars" id="volume-bars">
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+              <div class="volume-bar"></div>
+            </div>
+          </div>
+          <div id="channel-indicator" class="channel-indicator">
+            <div id="channel-text">CH 01</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="remote">
+    <div class="remote-top-row">
+      <button class="power-btn icon-btn" onclick="togglePower()"><img src="images/power.png" alt="Power"></button>
+      <div class="remote-header">DAC TV</div>
+      <button class="mute-btn icon-btn" onclick="mute()"><img src="images/mute.png" alt="Mute"></button>
+    </div>
+
+    <div class="controls-row">
+      <div class="control-group large">
+        <div class="control-part up" onclick="channelUp()">▲</div>
+        <div class="control-part label">CH</div>
+        <div class="control-part down" onclick="channelDown()">▼</div>
+      </div>
+      <div class="control-group large">
+        <div class="control-part up" onclick="volumeUp()">▲</div>
+        <div class="control-part label">VOL</div>
+        <div class="control-part down" onclick="volumeDown()">▼</div>
+      </div>
+    </div>
+    
+    <div class="bottom-row">
+      <button onclick="randomChannel()">RANDOM</button>
+      <button id="twitch-btn" onclick="openTwitch()">TWITCH</button>
+    </div>
+  </div>
+
+  <script>
+
+    const powerOnSound = new Audio('audio/CRT_ON.mp3');
+    const channelChangeSound = new Audio('audio/CRT_SWITCH.mp3');
+    powerOnSound.preload = 'auto';
+    channelChangeSound.preload = 'auto';
+
+    let currentChannel = 1;
+    let isPowered = false;
+    let clipsData = [];
+    let volumeHideTimeout;
+    let channelIndicatorTimeout;
+    let currentVolume = 0.5;
+    let isMuted = false;
+
+    fetch('clips.json')
+      .then(response => response.json())
+      .then(data => {
+        clipsData = data;
+        updateTV();
+      })
+      .catch(error => console.error('Error loading data:', error));
+
+    function playSound(sound) {
+      sound.currentTime = 0;           // Restart sound every time
+      sound.play().catch(e => {
+       console.log("Audio playback prevented by browser:", e);
+      });
+    }
+
+    function getChannel(filename) {
+      if (filename.startsWith('Slug')) return 'slvgbucket';
+      if (filename.startsWith('Rat')) return 'rats0oup';
+      // other members
+      return null;
+    }
+
+    function showVolumeOverlay(text, bars) {
+      const overlay = document.getElementById('volume-overlay');
+      const textEl = document.getElementById('volume-text');
+      const barsEl = document.getElementById('volume-bars');
+      textEl.textContent = text;
+      const barEls = barsEl.children;
+      for (let i = 0; i < barEls.length; i++) {
+        if (i < bars) {
+          barEls[i].classList.add('active');
+        } else {
+          barEls[i].classList.remove('active');
+        }
+      }
+      overlay.style.display = 'block';
+      clearTimeout(volumeHideTimeout);
+      volumeHideTimeout = setTimeout(() => {
+        overlay.style.display = 'none';
+      }, 2000);
+    }
+
+    function hideVolumeOverlay() {
+      document.getElementById('volume-overlay').style.display = 'none';
+      clearTimeout(volumeHideTimeout);
+    }
+
+    function showChannelIndicator() {
+      const indicator = document.getElementById('channel-indicator');
+      const channelText = document.getElementById('channel-text');
+      channelText.textContent = 'CH ' + String(currentChannel).padStart(2, '0');
+      indicator.classList.remove('fade-out');
+      indicator.style.display = 'block';
+      clearTimeout(channelIndicatorTimeout);
+      channelIndicatorTimeout = setTimeout(() => {
+        indicator.classList.add('fade-out');
+        setTimeout(() => {
+          indicator.style.display = 'none';
+        }, 300);
+      }, 1500);
+    }
+
+    function triggerChannelSwitch() {
+      const screen = document.getElementById('screen');
+      screen.classList.remove('channel-switch');
+      void screen.offsetWidth;
+      screen.classList.add('channel-switch');
+
+      playSound(channelChangeSound);
+
+      setTimeout(() => {
+        screen.classList.remove('channel-switch');
+      }, 400);
+    }
+
+    function updateTV() {
+      const video = document.getElementById('tv-video');
+      const content = document.getElementById('tv-content');
+      const twitchBtn = document.getElementById('twitch-btn');
+      let channelName = null;
+      hideVolumeOverlay(); // Hide overlay when changing channels
+      if (!isPowered) {
+        video.pause();
+        video.style.display = 'none';
+        content.style.display = 'block';
+        content.innerHTML = `<h2 style="color:#222;"></h2>`;
+          if (twitchBtn) twitchBtn.textContent = 'TWITCH';
+          return;
+      }
+      const clipIndex = currentChannel - 1;
+      if (clipIndex < clipsData.length) {
+        content.style.display = 'none';
+        video.style.display = 'block';
+        video.src = 'clips/' + clipsData[clipIndex];
+        video.muted = isMuted;
+        video.volume = currentVolume;
+        video.play();
+          channelName = getChannel(clipsData[clipIndex]);
+        } else {
+        video.pause();
+        video.style.display = 'none';
+        content.style.display = 'block';
+        content.innerHTML = `
+          <h2>CHANNEL ${currentChannel}</h2>
+          <p style="font-size:1.3rem;">NO SIGNAL</p>
+          <p>Dead Air Collective</p>
+        `;
+      }
+      if (twitchBtn) {
+        twitchBtn.textContent = channelName ? `TWITCH (${channelName})` : 'TWITCH';
+      }
+    }
+
+    // Add event listener for video end
+    document.getElementById('tv-video').addEventListener('ended', () => {
+      if (isPowered) channelUp();
+    });
+
+    function channelUp() { if(isPowered){ currentChannel++; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
+    function channelDown() { if(isPowered && currentChannel>1){ currentChannel--; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
+    function randomChannel() { if(isPowered){ currentChannel = Math.floor(Math.random()*188)+1; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
+    function mute() { 
+      if(isPowered) {
+        const video = document.getElementById('tv-video');
+        isMuted = !isMuted;
+        if (video.style.display !== 'none') {
+          video.muted = isMuted;
+        }
+        showVolumeOverlay(isMuted ? 'MUTED' : 'UNMUTED', isMuted ? 0 : Math.round(currentVolume * 10));
+      }
+    }
+    function volumeUp() { 
+      if(isPowered) {
+        currentVolume = Math.min(1, currentVolume + 0.1);
+        const video = document.getElementById('tv-video');
+        if (video.style.display !== 'none') {
+          video.volume = currentVolume;
+        }
+        showVolumeOverlay('VOLUME', Math.round(currentVolume * 10));
+      }
+    }
+    function volumeDown() { 
+      if(isPowered) {
+        currentVolume = Math.max(0, currentVolume - 0.1);
+        const video = document.getElementById('tv-video');
+        if (video.style.display !== 'none') {
+          video.volume = currentVolume;
+        }
+        showVolumeOverlay('VOLUME', Math.round(currentVolume * 10));
+      }
+    }
+    function togglePower() {
+      isPowered = !isPowered;
+      hideVolumeOverlay();
+      const screen = document.getElementById('screen');
+      if (isPowered) {
+        screen.classList.add('power-on');
+        
+        playSound(powerOnSound);
+
+        setTimeout(() => {
+          screen.classList.remove('power-on');
+        }, 1500);
+      }
+      updateTV();
+    }
+
+    function openTwitch() {
+      if (!isPowered) return;
+      const clipIndex = currentChannel - 1;
+      if (clipIndex < clipsData.length) {
+        const channel = getChannel(clipsData[clipIndex]);
+        if (channel) {
+          window.open(`https://www.twitch.tv/${channel}`, '_blank');
+        } else {
+          alert("No Twitch channel for this clip");
+        }
+      } else {
+        alert("No Twitch channel for this channel");
+      }
+    }
+
+    // Keyboard support
+    document.addEventListener('keydown', e => {
+      if (e.key === "ArrowUp" || e.key === "ArrowRight") channelUp();
+      if (e.key === "ArrowDown" || e.key === "ArrowLeft") channelDown();
+      if (e.key === " ") randomChannel();
+      if (e.key === "m" || e.key === "M") mute();
+      if (e.key === "Escape") togglePower();
+    });
+  </script>
+</body>
+</html>
