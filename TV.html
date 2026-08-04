@@ -207,7 +207,14 @@
 
     function channelUp() { if(isPowered){ currentChannel++; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
     function channelDown() { if(isPowered && currentChannel>1){ currentChannel--; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
-    function randomChannel() { if(isPowered){ currentChannel = Math.floor(Math.random()*188)+1; triggerChannelSwitch(); updateTV(); showChannelIndicator(); } }
+    function randomChannel() {
+      if (isPowered && clipsData.length) {
+        currentChannel = Math.floor(Math.random() * clipsData.length) + 1;
+        triggerChannelSwitch();
+        updateTV();
+        showChannelIndicator();
+      }
+    }
     function mute() { 
       if(isPowered) {
         const video = document.getElementById('tv-video');
