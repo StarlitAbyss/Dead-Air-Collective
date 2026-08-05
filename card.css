@@ -55,40 +55,56 @@
 }
 
 .profile-hero {
-  position: relative;
   display: grid;
-  grid-template-columns: minmax(320px, 1.2fr) minmax(280px, 0.8fr);
+  grid-template-columns: minmax(280px, 1fr) minmax(360px, 1.4fr);
   gap: 40px;
   align-items: start;
   min-height: 520px;
 }
 
+.profile-artwork-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
 .profile-artwork {
-  position: absolute;
-  inset: 0;
+  position: relative;
   z-index: 0;
-  overflow: hidden;
+  overflow: visible;
+  min-height: 620px;
+  border-radius: 32px;
+  background: transparent;
 }
 
 .profile-artwork img {
   position: absolute;
-  top: 50%;
-  right: 0;
-  height: 100%;
+  bottom: 0;
+  left: 40%;
+  height: 120%;
   width: auto;
   max-width: none;
-  transform: translateY(-50%);
+  transform: translateX(-50%);
   object-fit: contain;
-  object-position: right center;
+  object-position: left bottom;
+  pointer-events: none;
+}
+
+.profile-artwork::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 220%;
+  height: 220px;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 100%);
   pointer-events: none;
 }
 
 .profile-artwork::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.88) 100%);
-  z-index: 1;
+  display: none;
 }
 
 .profile-details {
@@ -97,6 +113,15 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+}
+
+.profile-separator {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: 1px;
+  margin: 0;
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .profile-bio,

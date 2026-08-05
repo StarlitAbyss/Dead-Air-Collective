@@ -109,6 +109,7 @@
             if (platform === 'twitch')      url = `https://twitch.tv/${username}`;
             else if (platform === 'discord') url = `https://discord.gg/${username}`;
             else if (platform === 'twitter') url = `https://x.com/${username}`;
+            else if (platform === 'instagram') url = `https://instagram.com/${username}`;
             else if (platform === 'bluesky') url = `https://bsky.app/profile/${username}`;
             else if (platform === 'youtube') url = `https://youtube.com/@${username}`;
             else if (platform === 'tiktok')  url = `https://www.tiktok.com/@${username}`;
@@ -125,6 +126,7 @@
         addSocial('twitch',   member.twitch,   'fa-brands fa-twitch');
         addSocial('discord',  member.discord,  'fa-brands fa-discord');
         addSocial('twitter',  member.twitter,  'fa-brands fa-twitter');
+        addSocial('instagram', member.instagram, 'fa-brands fa-instagram');
         addSocial('bluesky',  member.bluesky,  'fa-brands fa-bluesky');
         addSocial('youtube',  member.youtube,  'fa-brands fa-youtube');
         addSocial('tiktok',   member.tiktok,   'fa-brands fa-tiktok'); 

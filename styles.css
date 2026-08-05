@@ -335,6 +335,10 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 
 .member .socials {
   order: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
 }
 
 .socials a {
@@ -343,6 +347,7 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 }
 
 .socials a[href*="twitch.tv"]   { color: #9147ff; }
+.socials a[href*="instagram.com"] { color: #E1306C; }
 .socials a[href*="youtube.com"] { color: #ff0000; }
 .socials a[href*="bsky.app"]    { color: #0285ff; }
 .socials a[href*="discord.gg"]    { color: #5865F2; }
@@ -367,6 +372,7 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 
 #collective-socials .socials {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
   font-size: 2.7em;

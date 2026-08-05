@@ -20,8 +20,12 @@
 
       <div class="profile-content">
         <div class="profile-hero">
-          <div class="profile-artwork">
-            <img id="memberArtwork" src="" alt="Member artwork" />
+          <div class="profile-artwork-panel">
+            <div class="profile-separator profile-separator-top"></div>
+            <div class="profile-artwork">
+              <img id="memberArtwork" src="" alt="Member artwork" />
+            </div>
+            <div class="profile-separator profile-separator-bottom"></div>
           </div>
 
           <div class="profile-details">
@@ -59,6 +63,7 @@
       twitch: username => `https://twitch.tv/${username}`,
       discord: username => username.startsWith('http') ? username : `https://discord.gg/${username}`,
       twitter: username => `https://x.com/${username}`,
+      instagram: username => `https://instagram.com/${username}`,
       bluesky: username => username.includes('bsky.app') ? `https://${username}` : `https://bsky.app/profile/${username}`,
       youtube: username => `https://youtube.com/@${username}`,
       tiktok: username => `https://www.tiktok.com/@${username}`,
@@ -68,6 +73,7 @@
       twitch: 'fa-brands fa-twitch',
       discord: 'fa-brands fa-discord',
       twitter: 'fa-brands fa-twitter',
+      instagram: 'fa-brands fa-instagram',
       bluesky: 'fa-brands fa-bluesky',
       youtube: 'fa-brands fa-youtube',
       tiktok: 'fa-brands fa-tiktok',
