@@ -135,7 +135,7 @@
 
         const pageSlug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
         const memberLink = document.createElement('a');
-        memberLink.href = `card.html?member=${encodeURIComponent(pageSlug)}`;
+        memberLink.href = `card?member=${encodeURIComponent(pageSlug)}`;
         memberLink.className = 'member-card-link';
         memberLink.appendChild(memberDiv);
         membersSection.appendChild(memberLink);

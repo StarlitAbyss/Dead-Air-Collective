@@ -85,8 +85,15 @@
 
         document.getElementById('memberName').textContent = member.name;
         document.getElementById('memberBio').textContent = member.biography || 'No data available.';
-        document.getElementById('memberArtwork').src = member.artwork || member.image;
-        document.getElementById('memberArtwork').alt = `${member.name} artwork`;
+
+        const artworkEl = document.getElementById('memberArtwork');
+        if (member.artwork) {
+          artworkEl.src = member.artwork;
+          artworkEl.alt = `${member.name} artwork`;
+          artworkEl.style.display = '';
+        } else {
+          artworkEl.style.display = 'none';
+        }
 
         const links = document.getElementById('memberLinks');
         Object.keys(iconMap).forEach(platform => {

@@ -3,7 +3,7 @@
       {
         "name": "Soup",
         "image": "images/rat.png",
-        "artwork": "images/rat.png",
+        "artwork": "",
         "twitch": "bvgsoup",
         "discord": "CggwPnnndj",
         "twitter": "rats0oup",
@@ -14,7 +14,7 @@
       {
         "name": "Slug",
         "image": "images/slug.png",
-        "artwork": "images/slug.png",
+        "artwork": "",
         "twitch": "slvgbucket ",
         "discord": "US4ZaSe3UM",
         "twitter": "slvgbucket",
@@ -25,7 +25,7 @@
       {
         "name": "Doomick",
         "image": "images/doomick.png",
-        "artwork": "images/doomick.png",
+        "artwork": "",
         "twitch": "doomick_vt",
         "discord": "m2Fw77tQA7",
         "twitter": "IAmDoomick",
@@ -36,7 +36,7 @@
       {
         "name": "Harley",
         "image": "images/harley.png",
-        "artwork": "images/harley.png",
+        "artwork": "",
         "twitch": "harlequiinjestr",
         "discord": "6bYfGxcNCJ",
         "twitter": "HarlequiinJestr",
