@@ -3,48 +3,58 @@
       {
         "name": "Soup",
         "image": "images/rat.png",
+        "artwork": "images/rat.png",
         "twitch": "bvgsoup",
         "discord": "CggwPnnndj",
         "twitter": "rats0oup",
         "youtube": "bvgsoup",
-        "tiktok": ""
+        "tiktok": "",
+        "biography": "entry pending."
       },
       {
         "name": "Slug",
         "image": "images/slug.png",
+        "artwork": "images/slug.png",
         "twitch": "slvgbucket ",
         "discord": "US4ZaSe3UM",
         "twitter": "slvgbucket",
         "bluesky": "slvgbucket.bsky.social",
-        "youtube": "slvgbucket"
+        "youtube": "slvgbucket",
+        "biography": "♡ Hi~! I'm a Goofy lil' cat ♡ I get a bit silly~"
       },
       {
         "name": "Doomick",
         "image": "images/doomick.png",
+        "artwork": "images/doomick.png",
         "twitch": "doomick_vt",
         "discord": "m2Fw77tQA7",
         "twitter": "IAmDoomick",
         "bluesky": "",
-        "youtube": ""
+        "youtube": "",
+        "biography": "𖦹 Just a silly goofy chaotic ex pancake following what the mental illness says. I sing and yap a lot. Sometimes I play games. I literally have no idea what I'm doing..."
       },
       {
         "name": "Harley",
         "image": "images/harley.png",
+        "artwork": "images/harley.png",
         "twitch": "harlequiinjestr",
         "discord": "6bYfGxcNCJ",
         "twitter": "HarlequiinJestr",
         "bluesky": "harlequiinjestr.bsky.social",
         "youtube": "HarlequiinJestr",
-        "tiktok": "HarlequiinJestr"
+        "tiktok": "HarlequiinJestr",
+        "biography": "Quirky Jester who loves to draw, game and eat wacky foods! Come join the circus tent and see what entertainment we can provide! Comms: https://vgen.co/HarlequiinJestr"
       },
       {
         "name": "Scaith",
         "image": "images/scaith.png",
+        "artwork": "images/ScaithHanfutransparent_small.png",
         "twitch": "starlitabyss",
         "discord": "muVa3yD4ba",
         "twitter": "StarlitAbyss_",
         "bluesky": "starlitabyss.com",
-        "youtube": "StarlitAbyssVODs"
+        "youtube": "StarlitAbyssVODs",
+        "biography": "Moin, people call me Scaith, I am a technical artist with a passion for games as art, as well as a mild obsession of complex systems theory and all things space."
       }
     ]
   }

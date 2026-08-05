@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="images/DeadAirLogo_Green_Outlined.png" type="image/png" />
+  <title>Card — Dead Air Collective</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="card.css" />
+</head>
+<body class="profile-page">
+  <div class="crt-screen">
+    <div class="container glow">
+      <header class="profile-header-bar">
+        <div class="profile-title">
+          <h1 id="memberName">Loading...</h1>
+        </div>
+      </header>
+
+      <div class="profile-content">
+        <div class="profile-hero">
+          <div class="profile-artwork">
+            <img id="memberArtwork" src="" alt="Member artwork" />
+          </div>
+
+          <div class="profile-details">
+            <section class="profile-bio">
+              <h2>About</h2>
+              <p id="memberBio"></p>
+            </section>
+
+            <section class="profile-links">
+              <h2>Connect</h2>
+              <div class="profile-link-list" id="memberLinks"></div>
+            </section>
+          </div>
+        </div>
+
+        <footer class="profile-footer">
+          <a class="profile-logo-link" href="index.html" aria-label="Dead Air Collective Home">
+            <img src="images/DeadAirLogo_Green_Outlined.png" alt="Dead Air Collective Logo" />
+          </a>
+        </footer>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function getQueryParameter(name) {
+      const params = new URLSearchParams(window.location.search);
+      return params.get(name);
+    }
+
+    const memberSlug = getQueryParameter('member') || '';
+    const slugName = memberSlug.toLowerCase();
+
+    const linkMap = {
+      twitch: username => `https://twitch.tv/${username}`,
+      discord: username => username.startsWith('http') ? username : `https://discord.gg/${username}`,
+      twitter: username => `https://x.com/${username}`,
+      bluesky: username => username.includes('bsky.app') ? `https://${username}` : `https://bsky.app/profile/${username}`,
+      youtube: username => `https://youtube.com/@${username}`,
+      tiktok: username => `https://www.tiktok.com/@${username}`,
+    };
+
+    const iconMap = {
+      twitch: 'fa-brands fa-twitch',
+      discord: 'fa-brands fa-discord',
+      twitter: 'fa-brands fa-twitter',
+      bluesky: 'fa-brands fa-bluesky',
+      youtube: 'fa-brands fa-youtube',
+      tiktok: 'fa-brands fa-tiktok',
+    };
+
+    fetch('data.json')
+      .then(response => response.json())
+      .then(data => {
+        const member = data.members.find(item => item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slugName);
+        if (!member) {
+          document.getElementById('memberName').textContent = 'Member not found';
+          document.getElementById('memberBio').textContent = 'No data available.';
+          return;
+        }
+
+        document.getElementById('memberName').textContent = member.name;
+        document.getElementById('memberBio').textContent = member.biography || 'No data available.';
+        document.getElementById('memberArtwork').src = member.artwork || member.image;
+        document.getElementById('memberArtwork').alt = `${member.name} artwork`;
+
+        const links = document.getElementById('memberLinks');
+        Object.keys(iconMap).forEach(platform => {
+          const username = member[platform];
+          if (username) {
+            const url = linkMap[platform](username);
+            const a = document.createElement('a');
+            a.href = url;
+            a.target = '_blank';
+            a.rel = 'noreferrer noopener';
+            a.innerHTML = `<i class="${iconMap[platform]}"></i>${platform.charAt(0).toUpperCase() + platform.slice(1)}`;
+            links.appendChild(a);
+          }
+        });
+      })
+      .catch(() => {
+        document.getElementById('memberName').textContent = 'Unable to load profile';
+        document.getElementById('memberBio').textContent = 'There was a problem loading profile data.';
+      });
+  </script>
+</body>
+</html>
