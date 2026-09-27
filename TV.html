@@ -14,8 +14,6 @@
       <div class="screen-frame">
         <div class="screen" id="screen">
           <div class="content" id="tv-content">
-            <h1 style="font-size:2.2rem; margin:0;">Clips TV</h1>
-            <p style="font-size:1.1rem; opacity:0.9;">Dead Air Collective</p>
           </div>
           <video id="tv-video" style="width:100%; height:100%; display:none; object-fit: cover;"></video>
           <div class="crt-overlay" id="crt-overlay"></div>
@@ -139,7 +137,7 @@
       const channelText = document.getElementById('channel-text');
       channelText.textContent = 'CH ' + String(currentChannel).padStart(2, '0');
       indicator.classList.remove('fade-out');
-      indicator.style.display = 'block';
+      indicator.style.display = 'flex';
       clearTimeout(channelIndicatorTimeout);
       channelIndicatorTimeout = setTimeout(() => {
         indicator.classList.add('fade-out');
@@ -186,8 +184,7 @@
         video.style.display = 'none';
         content.style.display = 'block';
         content.innerHTML = `
-          <h2>CHANNEL ${currentChannel}</h2>
-          <p style="font-size:1.3rem;">NO SIGNAL</p>
+          <h2>NO SIGNAL</h2>
         `;
       }
     }
