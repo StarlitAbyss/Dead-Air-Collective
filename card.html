@@ -14,7 +14,7 @@
     <div class="container glow">
       <header class="profile-header-bar">
         <div class="profile-title">
-          <h1 id="memberName">Loading...</h1>
+          <h1 id="memberName">Tuning in...</h1>
         </div>
       </header>
 
@@ -95,13 +95,13 @@
           : null;
 
         if (!member) {
-          memberName.textContent = 'Member not found';
-          memberBio.textContent = 'No data available.';
+          memberName.textContent = 'Signal not found';
+          memberBio.textContent = 'This creator profile is unavailable. Use the logo below to return to the collective.';
           return;
         }
 
         memberName.textContent = member.name;
-        memberBio.textContent = member.biography || 'No data available.';
+        memberBio.textContent = member.biography || 'Bio coming soon. Find their channels below.';
 
         if (member.artwork) {
           memberArtwork.src = member.artwork;
@@ -152,8 +152,8 @@
 
         if (!links.childElementCount) links.textContent = 'No social links available.';
       } catch {
-        memberName.textContent = 'Unable to load profile';
-        memberBio.textContent = 'There was a problem loading profile data.';
+        memberName.textContent = 'Signal interrupted';
+        memberBio.textContent = 'We could not load this profile. Refresh to try again.';
       }
     }
 

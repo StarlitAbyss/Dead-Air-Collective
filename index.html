@@ -142,7 +142,7 @@
     .catch(error => {
       console.error('Error loading members:', error);
       document.getElementById('members').innerHTML = 
-        '<p style="text-align:center;color:#ff4444;">Members failed to load... what if they never come back?</p>';
+        '<p class="status-message" role="status">Members failed to load... what if they never come back?</p>';
     });
     const delay = Math.random() * 3;
     document.documentElement.style.setProperty('--random-delay', `${delay}s`);
