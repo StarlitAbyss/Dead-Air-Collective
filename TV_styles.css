@@ -21,23 +21,52 @@
     }
 
     .tv {
-      background: linear-gradient(#262626, #131313);
+      position: relative;
+      background: linear-gradient(135deg, #343a35 0%, #202521 18%, #171b18 62%, #101310 100%);
       padding: 35px 30px 60px;
-      border-radius: 45px;
+      border-radius: 50px;
       box-shadow:
-        0 0 90px rgba(0, 255, 180, 0.15),
-        inset 0 0 60px rgba(0,0,0,0.95),
+        0 0 90px rgba(0, 255, 180, 0.13),
+        inset 0 2px 3px rgba(255,255,255,0.12),
+        inset 0 -18px 30px rgba(0,0,0,0.7),
         0 30px 60px rgba(0,0,0,0.9);
-      border: 12px solid #111;
+      border: 12px solid #111512;
+    }
+
+    .tv::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      bottom: 21px;
+      width: 142px;
+      height: 12px;
+      transform: translateX(-50%);
+      border-radius: 8px;
+      background: repeating-linear-gradient(180deg, #090c0a 0 1px, #313832 1px 2px);
+      box-shadow: 0 1px 2px rgba(255,255,255,0.12), 0 2px 5px rgba(0,0,0,0.65);
+      pointer-events: none;
     }
 
     .tv::after {
       content: '';
       position: absolute;
+      right: 34px;
+      bottom: 20px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #9bea79;
+      box-shadow: 0 0 7px rgba(155,234,121,0.75);
+      pointer-events: none;
+    }
+
+    .screen-frame::before {
+      content: '';
+      position: absolute;
       left: 50%;
-      top: 13%;
+      top: 0;
       width: 80%;
-      height: 38%;
+      height: 42%;
       background: linear-gradient(180deg, rgba(255,255,255,0.13) 0%, rgba(255,255,255,0.01) 50%);
       border-radius: 50% 50% 40% 40%/60% 60% 40% 40%;
       transform: translateX(-50%);
@@ -46,11 +75,14 @@
     }
 
     .screen-frame {
-      border: 14px solid #0a0a0a;
-      border-radius: 8px;
-      background: #000;
+      border: 16px solid #090c0a;
+      border-radius: 18px;
+      background: #050706;
       overflow: hidden;
       position: relative;
+      box-shadow:
+        inset 0 0 0 2px #29312b,
+        0 10px 24px rgba(0,0,0,0.65);
     }
 
     .screen {
@@ -255,18 +287,17 @@
       z-index: 1;
     }
 
-    /* Remote - closer to original */
     .remote {
-      background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+      background: linear-gradient(155deg, #343b35 0%, #202721 42%, #141815 100%);
       width: 220px;
       padding: 24px 18px;
-      border-radius: 48px;
+      border-radius: 36px;
       box-shadow: 
-        0 25px 50px rgba(0,0,0,0.8),
-        inset 0 5px 10px rgba(255,255,255,0.1),
-        inset 0 -5px 10px rgba(0,0,0,0.3),
-        0 0 18px rgba(0, 255, 180, 0.16);
-      border: 8px solid #333;
+        0 25px 50px rgba(0,0,0,0.75),
+        inset 0 2px 3px rgba(255,255,255,0.16),
+        inset 0 -8px 14px rgba(0,0,0,0.38),
+        0 0 22px rgba(145, 205, 125, 0.2);
+      border: 7px solid #404941;
       align-self: center;
       margin-top: -150px;
       margin-left: 700px;
@@ -274,6 +305,8 @@
       transform: rotate(-6deg);
       transform-origin: top right;
       z-index: 10;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .remote::before {
@@ -282,10 +315,11 @@
       top: 8px;
       left: 50%;
       transform: translateX(-50%);
-      width: 50px;
-      height: 3px;
-      background: #555;
+      width: 54px;
+      height: 4px;
+      background: #667066;
       border-radius: 2px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.55);
     }
 
     .remote-top-row {
@@ -301,7 +335,8 @@
       text-align: center;
       margin: 0;
       font-size: 0.75rem;
-      opacity: 0.85;
+      color: #e4eddc;
+      text-shadow: 0 1px 2px #000;
     }
 
     .icon-btn img {
@@ -320,9 +355,10 @@
     .control-group {
       display: flex;
       flex-direction: column;
-      border-radius: 10px;
+      border: 1px solid #566157;
+      border-radius: 12px;
       overflow: hidden;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 2px 5px rgba(0,0,0,0.3);
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.12), 0 3px 6px rgba(0,0,0,0.4);
     }
 
     .control-group.large {
@@ -331,15 +367,17 @@
     }
 
     .control-part {
-      background: linear-gradient(145deg, #444, #333);
-      color: #ddd;
+      background: linear-gradient(145deg, #566158, #343c35);
+      color: #f0f3eb;
       padding: 12px 10px;
       text-align: center;
       cursor: pointer;
-      transition: all 0.1s;
+      transition: background 0.15s ease, transform 0.1s ease;
       font-size: 0.8rem;
       border: none;
       font-family: 'Press Start 2P', sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
     .control-group.large .control-part {
@@ -354,18 +392,18 @@
     }
 
     .control-group.large .control-part.label {
-      background: linear-gradient(145deg, #333, #222);
+      background: linear-gradient(145deg, #374038, #262d27);
       font-size: 0.7rem;
       padding: 10px 10px;
     }
 
     .control-part:hover {
-      background: linear-gradient(145deg, #555, #444);
+      background: linear-gradient(145deg, #68776a, #465248);
     }
 
     .control-part:active {
       transform: scale(0.95);
-      background: linear-gradient(145deg, #333, #222);
+      background: linear-gradient(145deg, #303831, #202620);
     }
 
     .bottom-row {
@@ -375,6 +413,19 @@
       justify-content: center;
     }
 
+    .remote .bottom-row button {
+      flex: 1;
+      min-width: 0;
+      padding: 12px 6px;
+      font-size: 0.58rem;
+    }
+
+    #twitch-btn {
+      background: linear-gradient(145deg, #a970ff, #772ce8);
+      color: #fff;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 3px 8px rgba(75,35,140,0.55);
+    }
+
     .channel-display {
       text-align: center;
       margin-top: 16px;
@@ -382,9 +433,9 @@
       opacity: 0.7;
     }
 
-    button {
-      background: linear-gradient(145deg, #444, #333);
-      color: #ddd;
+    .remote button {
+      background: linear-gradient(145deg, #566158, #343c35);
+      color: #f0f3eb;
       border: none;
       padding: 12px 10px;
       margin: 6px 0;
@@ -393,31 +444,42 @@
       font-size: 0.7rem;
       cursor: pointer;
       width: 100%;
-      transition: all 0.1s;
-      box-shadow: inset 0 2px 4px rgba(255,255,255,0.1), 0 2px 4px rgba(0,0,0,0.3);
+      transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+      box-shadow: inset 0 1px 3px rgba(255,255,255,0.15), 0 3px 5px rgba(0,0,0,0.35);
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    button.small-btn {
+    .remote button:hover {
+      filter: brightness(1.12);
+    }
+
+    .remote button:focus-visible {
+      outline: 2px solid #a970ff;
+      outline-offset: 3px;
+    }
+
+    .remote button.small-btn {
       width: auto;
       padding: 8px 10px;
       font-size: 0.8rem;
       margin: 0;
     }
 
-    button.icon-btn {
+    .remote button.icon-btn {
       width: auto;
       padding: 10px;
-      background: linear-gradient(145deg, #333, #222);
+      background: linear-gradient(145deg, #374038, #262d27);
       border-radius: 12px;
     }
 
-    button:active {
+    .remote button:active {
       transform: scale(0.95);
       box-shadow: inset 0 1px 2px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.3);
     }
 
     .power-btn { 
-      background: linear-gradient(145deg, #c00, #a00) !important; 
+      background: linear-gradient(145deg, #f06454, #a82f28) !important;
       color: white; 
       box-shadow: inset 0 2px 4px rgba(255,255,255,0.2), 0 2px 4px rgba(0,0,0,0.3);
       font-size: 1rem;
@@ -425,7 +487,7 @@
     }
 
     .mute-btn {
-      background: linear-gradient(145deg, #666, #555) !important;
+      background: linear-gradient(145deg, #788277, #515b51) !important;
       padding: 8px;
       font-size: 1rem;
     }

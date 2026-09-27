@@ -47,7 +47,12 @@
         "bluesky": "harlequiinjestr.bsky.social",
         "youtube": "HarlequiinJestr",
         "tiktok": "HarlequiinJestr",
-        "biography": "Quirky Jester who loves to draw, game and eat wacky foods! Come join the circus tent and see what entertainment we can provide! Comms: https://vgen.co/HarlequiinJestr"
+        "specialButton": {
+          "title": "Commission me",
+          "url": "https://vgen.co/HarlequiinJestr"
+        },
+        "references": "https://google.com",
+        "biography": "Quirky Jester who loves to draw, game and eat wacky foods! Come join the circus tent and see what entertainment we can provide!"
       },
       {
         "name": "Scaith",

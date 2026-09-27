@@ -19,19 +19,18 @@
       </header>
 
       <div class="profile-content">
-        <div class="profile-hero">
-          <div class="profile-artwork-panel">
-            <div class="profile-separator profile-separator-top"></div>
+        <div class="profile-hero no-artwork">
+          <div class="profile-artwork-panel" id="memberArtworkPanel" hidden>
             <div class="profile-artwork">
-              <img id="memberArtwork" src="" alt="Member artwork" />
+              <img id="memberArtwork" alt="" />
             </div>
-            <div class="profile-separator profile-separator-bottom"></div>
           </div>
 
           <div class="profile-details">
             <section class="profile-bio">
               <h2>About</h2>
               <p id="memberBio"></p>
+              <div class="profile-about-actions" id="memberReferences"></div>
             </section>
 
             <section class="profile-links">
@@ -41,30 +40,28 @@
           </div>
         </div>
 
-        <footer class="profile-footer">
+        <div class="profile-footer-layer">
+          <footer class="profile-footer">
           <a class="profile-logo-link" href="index.html" aria-label="Dead Air Collective Home">
             <img src="images/DeadAirLogo_Green_Outlined.png" alt="Dead Air Collective Logo" />
           </a>
-        </footer>
+          </footer>
+        </div>
       </div>
     </div>
   </div>
 
   <script>
-    function getQueryParameter(name) {
-      const params = new URLSearchParams(window.location.search);
-      return params.get(name);
-    }
-
-    const memberSlug = getQueryParameter('member') || '';
-    const slugName = memberSlug.toLowerCase();
+    const memberSlug = new URLSearchParams(window.location.search).get('member') || '';
+    const slugName = memberSlug.trim().toLowerCase();
+    const slugify = value => value.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 
     const linkMap = {
       twitch: username => `https://twitch.tv/${username}`,
-      discord: username => username.startsWith('http') ? username : `https://discord.gg/${username}`,
+      discord: username => /^https?:\/\//i.test(username) ? username : `https://discord.gg/${username}`,
       twitter: username => `https://x.com/${username}`,
       instagram: username => `https://instagram.com/${username}`,
-      bluesky: username => username.includes('bsky.app') ? `https://${username}` : `https://bsky.app/profile/${username}`,
+      bluesky: username => /^https?:\/\//i.test(username) ? username : `https://bsky.app/profile/${username}`,
       youtube: username => `https://youtube.com/@${username}`,
       tiktok: username => `https://www.tiktok.com/@${username}`,
     };
@@ -79,46 +76,88 @@
       tiktok: 'fa-brands fa-tiktok',
     };
 
-    fetch('data.json')
-      .then(response => response.json())
-      .then(data => {
-        const member = data.members.find(item => item.name.toLowerCase().replace(/[^a-z0-9]+/g, '-') === slugName);
+    async function loadProfile() {
+      const memberName = document.getElementById('memberName');
+      const memberBio = document.getElementById('memberBio');
+      const memberArtwork = document.getElementById('memberArtwork');
+      const artworkPanel = document.getElementById('memberArtworkPanel');
+      const profileHero = document.querySelector('.profile-hero');
+      const links = document.getElementById('memberLinks');
+      const references = document.getElementById('memberReferences');
+
+      try {
+        const response = await fetch('data.json');
+        if (!response.ok) throw new Error('Profile data request failed.');
+
+        const data = await response.json();
+        const member = Array.isArray(data.members)
+          ? data.members.find(item => slugify(item.name) === slugName)
+          : null;
+
         if (!member) {
-          document.getElementById('memberName').textContent = 'Member not found';
-          document.getElementById('memberBio').textContent = 'No data available.';
+          memberName.textContent = 'Member not found';
+          memberBio.textContent = 'No data available.';
           return;
         }
 
-        document.getElementById('memberName').textContent = member.name;
-        document.getElementById('memberBio').textContent = member.biography || 'No data available.';
+        memberName.textContent = member.name;
+        memberBio.textContent = member.biography || 'No data available.';
 
-        const artworkEl = document.getElementById('memberArtwork');
         if (member.artwork) {
-          artworkEl.src = member.artwork;
-          artworkEl.alt = `${member.name} artwork`;
-          artworkEl.style.display = '';
-        } else {
-          artworkEl.style.display = 'none';
+          memberArtwork.src = member.artwork;
+          memberArtwork.alt = `${member.name} artwork`;
+          artworkPanel.hidden = false;
+          profileHero.classList.remove('no-artwork');
         }
 
-        const links = document.getElementById('memberLinks');
-        Object.keys(iconMap).forEach(platform => {
-          const username = member[platform];
-          if (username) {
-            const url = linkMap[platform](username);
-            const a = document.createElement('a');
-            a.href = url;
-            a.target = '_blank';
-            a.rel = 'noreferrer noopener';
-            a.innerHTML = `<i class="${iconMap[platform]}"></i>${platform.charAt(0).toUpperCase() + platform.slice(1)}`;
-            links.appendChild(a);
-          }
+        Object.entries(iconMap).forEach(([platform, iconClass]) => {
+          const username = typeof member[platform] === 'string' ? member[platform].trim() : '';
+          if (!username) return;
+
+          const link = document.createElement('a');
+          const icon = document.createElement('i');
+          const label = platform.charAt(0).toUpperCase() + platform.slice(1);
+          icon.className = iconClass;
+          link.href = linkMap[platform](username);
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.append(icon, document.createTextNode(label));
+          links.appendChild(link);
         });
-      })
-      .catch(() => {
-        document.getElementById('memberName').textContent = 'Unable to load profile';
-        document.getElementById('memberBio').textContent = 'There was a problem loading profile data.';
-      });
+
+        const specialButton = member.specialButton;
+        if (specialButton?.title && specialButton?.url) {
+          const link = document.createElement('a');
+          const icon = document.createElement('i');
+          icon.className = 'fa-solid fa-pen-nib';
+          link.className = 'special-link';
+          link.href = specialButton.url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.append(icon, document.createTextNode(specialButton.title));
+          links.appendChild(link);
+        }
+
+        if (member.references) {
+          const link = document.createElement('a');
+          const icon = document.createElement('i');
+          icon.className = 'fa-solid fa-images';
+          link.className = 'references-link';
+          link.href = member.references;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.append(icon, document.createTextNode('References'));
+          references.appendChild(link);
+        }
+
+        if (!links.childElementCount) links.textContent = 'No social links available.';
+      } catch {
+        memberName.textContent = 'Unable to load profile';
+        memberBio.textContent = 'There was a problem loading profile data.';
+      }
+    }
+
+    loadProfile();
   </script>
 </body>
 </html>

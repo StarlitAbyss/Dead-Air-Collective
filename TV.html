@@ -166,15 +166,12 @@
     function updateTV() {
       const video = document.getElementById('tv-video');
       const content = document.getElementById('tv-content');
-      const twitchBtn = document.getElementById('twitch-btn');
-      let channelName = null;
       hideVolumeOverlay(); // Hide overlay when changing channels
       if (!isPowered) {
         video.pause();
         video.style.display = 'none';
         content.style.display = 'block';
         content.innerHTML = `<h2 style="color:#222;"></h2>`;
-          if (twitchBtn) twitchBtn.textContent = 'TWITCH';
           return;
       }
       const clipIndex = currentChannel - 1;
@@ -185,7 +182,6 @@
         video.muted = isMuted;
         video.volume = currentVolume;
         video.play();
-          channelName = getChannel(clipsData[clipIndex]);
         } else {
         video.pause();
         video.style.display = 'none';
@@ -195,9 +191,6 @@
           <p style="font-size:1.3rem;">NO SIGNAL</p>
           <p>Dead Air Collective</p>
         `;
-      }
-      if (twitchBtn) {
-        twitchBtn.textContent = channelName ? `TWITCH (${channelName})` : 'TWITCH';
       }
     }
 

@@ -31,7 +31,7 @@ body {
   box-shadow: 
     inset 0 0 120px #000,
     0 0 80px rgba(0,255,65,0.2);
-  transform: perspective(1000px) rotateX(4deg);
+  transform: rotateX(2deg);
   overflow: hidden;
 }
 
@@ -72,6 +72,14 @@ body {
   top: 0;
   width: 100%;
   z-index: 9;
+}
+
+.vhs video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
 }
 
 .backgroundImage {
@@ -127,7 +135,7 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 #about { text-align: center; margin-bottom: 60px; font-size: 1.3em; line-height: 1.5; }
 
 
-/* Glitch effects */
+
 .glitch-text {
     position: relative;
     display: inline-block;
@@ -246,12 +254,12 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
 
 #members {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: 50px;
 }
 
 .member {
-    background: rgba(8, 8, 8, 0.4);          /* semi-transparent dark overlay */
+    background: rgba(8, 8, 8, 0.4);
     background-blend-mode: multiply;
     background-size: cover;
     background-position: center;
@@ -260,12 +268,11 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
     border: 3px solid #e8ffba;
     border-radius: 14px;
     text-align: center;
-    backdrop-filter: blur(4px);
-    min-height: 380px;                        /* consistent height of images */
+    min-height: 380px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    transition: all 0.3s ease;
+    transition: box-shadow 0.2s ease, border-color 0.2s ease;
     position: relative;
     overflow: visible;
     box-shadow: 0 0 16px rgba(0, 255, 64, 0.5), 0 0 6px rgba(0, 255, 64, 0.5), 0 0 6px rgba(0, 255, 64, 0.5);
@@ -282,8 +289,20 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   }
   
   .member > * {
-    position: relative;   /* bring content above overlay */
+    position: relative; 
     z-index: 1;
+  }
+
+  .member-image-link {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    border-radius: inherit;
+  }
+
+  .member-image-link:focus-visible {
+    outline: 2px solid #e8ffba;
+    outline-offset: 4px;
   }
   
   .member h3 {
@@ -309,6 +328,16 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
     background: linear-gradient(135deg, rgba(0, 0, 0, 1), rgba(0, 255, 65, 0.12));
     box-shadow: 0 0 24px rgba(0, 255, 65, 0.45), inset 0 0 12px rgba(0, 255, 65, 0.15);
     text-shadow: 0 0 16px rgba(0, 255, 65, 0.5), 0 0 8px rgba(0, 255, 65, 0.3);
+  }
+
+  .member h3 a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .member h3 a:focus-visible {
+    outline: 2px solid #e8ffba;
+    outline-offset: 4px;
   }
   
   /* fallback if image fails to load */
@@ -380,14 +409,8 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   text-shadow: 0 0 18px #00ff403b;
 }
 
-.member-card-link {
-  display: block;
-  text-decoration: none;
-  color: inherit;
-}
-
-.member-card-link .member:hover {
-  transform: translateY(-6px);
+.member:hover {
+  box-shadow: 0 0 22px rgba(0, 255, 64, 0.55);
 }
 
 .top-button {
@@ -493,7 +516,6 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   font-weight: 400;
 }
 
-/* Override for non-brand icons (like email) */
 .socials a[href^="mailto:"] i {
   font-family: "Font Awesome 6 Free" !important; 
   font-weight: 400;  
@@ -529,7 +551,6 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   transform: translateY(-4px);
 }
 
-/* flicker on noise */
 @keyframes noise-flicker {
   0%, 100% { opacity: 0.12; }
   50% { opacity: 0.14; }
@@ -688,7 +709,6 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   color: #aaffaa;
 }
 
-/* About Us - Split Image + Text Layout */
 .info-split {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -738,14 +758,13 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
       margin: 0;
       padding: 15px 8px 25px;
       border: 6px solid #111;
-      border-radius: 12px;           /* gentler curve */
-      transform: none;               /* remove perspective*/
+      border-radius: 12px;
+      transform: none;
       box-shadow: 
         inset 0 0 60px #000,
         0 0 40px rgba(0, 255, 65, 0.15);
     }
   
-    /* soften the heavy vignette & scanlines */
     .crt-screen::before {
       background: radial-gradient(circle at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 85%, #000 100%);
     }
@@ -754,15 +773,22 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
       background: repeating-linear-gradient(to bottom, transparent 0, transparent 3px, rgba(0,0,0,0.35) 3px, rgba(0,0,0,0.35) 6px);
     }
   
-    /* scale down typography */
     h1 {
-      font-size: 2.6em !important;
-      margin-bottom: 0.3em;
+      font-size: 1.9em;
+      margin-bottom: 0.25em;
     }
   
     #about {
-      font-size: 1.15em;
-      margin-bottom: 40px;
+      font-size: 1rem;
+      margin-bottom: 24px;
+    }
+
+    #header-with-logo {
+      gap: 16px;
+    }
+
+    .site-logo {
+      max-width: 148px;
     }
 
     h3 {
@@ -771,18 +797,23 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   
     /* single column */
     #members {
-      grid-template-columns: 1fr !important;
-      gap: 35px;
+      grid-template-columns: 1fr;
+      gap: 28px;
     }
   
     .member {
-      padding: 35px 18px 30px;
-      min-height: auto;
+      padding: 38px 16px 24px;
+      min-height: 190px;
+      margin-top: 24px;
       border-radius: 10px;
     }
   
     .member h3 {
-      font-size: 1.95em;
+      top: -24px;
+      max-width: calc(100% - 24px);
+      font-size: 1.45em;
+      line-height: 1.25;
+      white-space: normal;
     }
   
     .socials {
@@ -792,7 +823,6 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   
     .buttonmarquee {
       padding: 12px 8px 8px;
-      padding-top: 45px;
       margin-top: 15px;
     }
   
@@ -803,9 +833,29 @@ h3 { font-size: 2.2em; margin-bottom: 0.5em; }
   
     #collective-socials .socials {
       justify-content: center;
-      gap: 22px;
-      font-size: 1.9em;
-      padding: 12px 0;
+      gap: 18px;
+      font-size: 1.65em;
+      padding: 6px 0;
+    }
+
+    #collective-socials {
+      gap: 12px;
+    }
+
+    #collective-socials .top-button {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.8rem;
     }
     
   }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

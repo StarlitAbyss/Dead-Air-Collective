@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'W95F';
+  src: url('W95F.otf') format('opentype');
+  font-display: swap;
+}
+
+:root {
+  --font-display: 'W95F', 'Courier New', monospace;
+  --font-body: 'Consolas', 'Liberation Mono', monospace;
+  --text-bright: #e8ffba;
+  --text-body: #d2dfc7;
+  --text-muted: #aac399;
+  --text-glow: 0 0 7px rgba(148, 255, 139, 0.24);
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+}
+
+h1, h2, h3, button, .top-button, .return-button {
+  font-family: var(--font-display);
+}
+
+h1, h2, h3 {
+  color: var(--text-bright);
+  font-weight: 400;
+  line-height: 1.15;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+  text-shadow: var(--text-glow);
+}
+
+p {
+  text-wrap: pretty;
+  overflow-wrap: anywhere;
+}
+
+button, .top-button, .return-button {
+  line-height: 1.3;
+}
+
+::selection {
+  color: #071108;
+  background: #c9f7a4;
+  text-shadow: none;
+}
+
+:where(a, button):focus-visible {
+  outline: 2px solid var(--text-bright);
+  outline-offset: 4px;
+}

@@ -12,22 +12,11 @@
   <div class="crt-screen">
     <div class="vhs">
       <video
-             src="https://res.cloudinary.com/dhcl0fsay/video/upload/v1758365149/deadmeat-horror-awards-24/vhs_svgkmp.mp4"
-             loop
-             autoplay
-             playsinline
-             muted
-             style="
-                    cursor: auto;
-                    width: 100%;
-                    height: 100%;
-                    border-radius: 0px;
-                    display: block;
-                    object-fit: cover;
-                    background-color: rgba(0, 0, 0, 0);
-                    object-position: 50% 50%;
-                    "
-             />
+        src="https://res.cloudinary.com/dhcl0fsay/video/upload/v1758365149/deadmeat-horror-awards-24/vhs_svgkmp.mp4"
+        loop
+        autoplay
+        playsinline
+        muted></video>
     </div>
     <div class="backgroundImage"></div>
     <div class="noise-overlay"></div>
@@ -42,8 +31,7 @@
           <a href="https://www.youtube.com/@DeadAirCollectiveTV" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
           <a href="mailto:contact@deadaircollective.com" target="_blank" aria-label="Email"><i class="fas fa-envelope"></i></a>
         </div>
-        <!-- <a class="top-button top-right" href="https://store.deadaircollective.tv" target="_blank">Shop Merch</a> -->
-        <a class="top-button top-right" href="" target="_blank">Shop Coming soon</a>
+        <span class="top-button top-right" aria-disabled="true">Merch Coming Soon</span>
       </section>
     <div class="container glow">
       <!-- Logo and Title Header -->
@@ -53,8 +41,7 @@
         </div>
         <section id="about">
           <h1 class="glitch-text" data-text="Dead Air Collective">Dead Air Collective</h1>
-          <p>...because dropped frames, disconnects, buffering and packet loss are features
-          </p>
+          <p>...because dropped frames, disconnects, buffering and packet loss are features</p>
         </section>
       </div>
 
@@ -95,32 +82,46 @@
 
         // Name
         const name = document.createElement('h3');
-        name.textContent = member.name;
+        const profileLink = document.createElement('a');
+        const pageSlug = member.name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-');
+        const profileUrl = `card.html?member=${encodeURIComponent(pageSlug)}`;
+        const imageLink = document.createElement('a');
+        imageLink.href = profileUrl;
+        imageLink.className = 'member-image-link';
+        imageLink.setAttribute('aria-label', `View ${member.name}'s profile`);
+        memberDiv.appendChild(imageLink);
+        profileLink.href = profileUrl;
+        profileLink.className = 'member-profile-link';
+        profileLink.textContent = member.name;
+        name.appendChild(profileLink);
         memberDiv.appendChild(name);
 
         // Social icons container
         const socialsDiv = document.createElement('div');
         socialsDiv.className = 'socials';
 
-        // Helper to add social link
         const addSocial = (platform, username, iconClass) => {
-          if (username) {
-            let url = '#';
-            if (platform === 'twitch')      url = `https://twitch.tv/${username}`;
-            else if (platform === 'discord') url = `https://discord.gg/${username}`;
-            else if (platform === 'twitter') url = `https://x.com/${username}`;
-            else if (platform === 'instagram') url = `https://instagram.com/${username}`;
-            else if (platform === 'bluesky') url = `https://bsky.app/profile/${username}`;
-            else if (platform === 'youtube') url = `https://youtube.com/@${username}`;
-            else if (platform === 'tiktok')  url = `https://www.tiktok.com/@${username}`;
+          const account = typeof username === 'string' ? username.trim() : '';
+          if (!account) return;
 
-            const link = document.createElement('a');
-            link.href = url;
-            link.target = '_blank';
-            link.setAttribute('aria-label', platform);
-            link.innerHTML = `<i class="${iconClass}"></i>`;
-            socialsDiv.appendChild(link);
-          }
+          let url = '#';
+          if (platform === 'twitch') url = `https://twitch.tv/${account}`;
+          else if (platform === 'discord') url = `https://discord.gg/${account}`;
+          else if (platform === 'twitter') url = `https://x.com/${account}`;
+          else if (platform === 'instagram') url = `https://instagram.com/${account}`;
+          else if (platform === 'bluesky') url = `https://bsky.app/profile/${account}`;
+          else if (platform === 'youtube') url = `https://youtube.com/@${account}`;
+          else if (platform === 'tiktok') url = `https://www.tiktok.com/@${account}`;
+
+          const link = document.createElement('a');
+          link.href = url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.setAttribute('aria-label', platform);
+          const icon = document.createElement('i');
+          icon.className = iconClass;
+          link.appendChild(icon);
+          socialsDiv.appendChild(link);
         };
 
         addSocial('twitch',   member.twitch,   'fa-brands fa-twitch');
@@ -135,20 +136,15 @@
           memberDiv.appendChild(socialsDiv);
         }
 
-        const pageSlug = member.name.toLowerCase().replace(/[^a-z0-9]+/g, '-');
-        const memberLink = document.createElement('a');
-        memberLink.href = `card?member=${encodeURIComponent(pageSlug)}`;
-        memberLink.className = 'member-card-link';
-        memberLink.appendChild(memberDiv);
-        membersSection.appendChild(memberLink);
+        membersSection.appendChild(memberDiv);
       });
     })
     .catch(error => {
       console.error('Error loading members:', error);
       document.getElementById('members').innerHTML = 
-        '<p style="text-align:center;color:#ff4444;">Failed to load members. Check data.json</p>';
+        '<p style="text-align:center;color:#ff4444;">Members failed to load... what if they never come back?</p>';
     });
-    const delay = Math.random() * 3;           // 0 to 3 seconds
+    const delay = Math.random() * 3;
     document.documentElement.style.setProperty('--random-delay', `${delay}s`);
 </script>
 
