@@ -28,7 +28,7 @@ body {
   box-shadow: 
     inset 0 0 120px #000,
     0 0 80px rgba(0,255,65,0.2);
-  transform: rotateX(2deg);
+  transform: perspective(1000px) rotateX(4deg);
   overflow: hidden;
 }
 
